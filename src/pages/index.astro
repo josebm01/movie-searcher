@@ -1,0 +1,11 @@
+---
+import Movies from '@components/Movies.astro';
+import Layout from '../layouts/Layout.astro';
+import { Search } from '@components/Search.jsx'
+---
+
+<Layout title="Movies Astro">
+	<!-- ! load es para realizar cambios dinámicos -->
+	<Search client:load />
+	<Movies />
+</Layout>

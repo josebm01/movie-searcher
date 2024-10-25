@@ -1,0 +1,29 @@
+---
+import { getDataMovie } from "src/api/movie"
+
+const data = await getDataMovie( "https://api.themoviedb.org/3/movie/popular" )
+
+const detail = "/detail/"
+const poster_url = "https:/image.tmdb.org/t/p/w500"
+const popular = "Películas populares"
+---
+
+
+
+<div class="row">
+    <h1>{ popular }</h1>
+    {
+        data.results.map ( (movie: any) => (
+        <div class="col-lg-3">
+            <div class="card mt-4" style="width: 18rem;">
+                <a href={ detail + movie.id }>
+                    <img src={ poster_url + movie.poster_path } alt="poster" class="card-img-top">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title"> { movie.title } </h5>
+                </div>
+            </div>
+        </div>
+        ))
+    }
+</div>

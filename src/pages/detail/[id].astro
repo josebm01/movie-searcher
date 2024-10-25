@@ -1,0 +1,51 @@
+---
+import Layout from "@layouts/Layout.astro";
+import { getDataMovie } from "src/api/movie";
+
+const { id } = Astro.params;
+
+const data = await getDataMovie( "https://api.themoviedb.org/3/movie/"+id )
+const poster_url = "https:/image.tmdb.org/t/p/w500";
+
+// trailer 
+const trailer = await getDataMovie("https://api.themoviedb.org/3/movie/"+id+"/videos")
+const res = trailer.results.filter( (p: any) => p.type === "Trailer" )
+const video = res[0]
+const youtube = "https://www.youtube.com/embed/"
+---
+
+<Layout title="pelicula">
+  <div class="container">
+    <div class="row">
+      <div class="col mt-5">
+        <div class="col-ms-4">
+          <img
+            src={poster_url + data.poster_path}
+            alt="poster"
+            class="img-fluid rounded-start"
+          />
+        </div>
+      </div>
+      <div class="col mt-5">
+        <h1><span class="badge bg-dark">{data.title}</span></h1>
+        <h4>{data.tagline}</h4>
+        <h2 class="mt-4">Sinopsis:</h2>
+        <p>{data.overview}</p>
+        <p>Lanzamiento: <span class="badge bg-secondary">{data.release_date}</span></p>
+        <h1 class="mt-4"> Calificación: <span class="badge bg-danger">{Math.round(data.vote_average)}</span>
+        </h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-5 mb-3">
+      <h1>Trailer</h1>
+      {
+        video ? (
+            <iframe src={ youtube + video.key } width="1280" height="720" frameborder="0" allowfullscreen></iframe>
+        ) : (
+            <h4>Video no encontrado</h4>
+        )
+      }
+  </div>
+</Layout>

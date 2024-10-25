@@ -1,0 +1,50 @@
+---
+import Layout from "@layouts/Layout.astro";
+import { getDataMovieDetail } from "src/api/movie";
+import { Search } from "@components/Search.jsx";
+
+const { search } = Astro.params;
+
+// const response = await getDataMovie("https://api.themoviedb.org/3/search/movie?api_key=f4928f8d9c6da0e9aff83425db71d143&lenguage=en-US&query="+search+"&page=1&include_adult=false")
+// const data = await response.json()
+
+const data = await getDataMovieDetail(search || "");
+
+const detail = "/detail/";
+const poster_url = "https://image.tmdb.org/t/p/w500";
+---
+
+<Layout title="Buscar película">
+  <Search client:load />
+  <h3 mt-5>Resultados de: <span style={ "color: blue; "}>{ search }</span> </h3>
+  <div class="row">
+    {
+      data.results.map((movie: any) => (
+        <div class="col-lg-3">
+          <div class="card mt-4" style="width: 18rem;">
+            <a href={detail + movie.id}>
+                {
+                    movie.poster_path ? (
+                        <img
+                          src={poster_url + movie.poster_path}
+                          alt="poster"
+                          class="card-img-top"
+                        />
+                    ) : (
+                        <img
+                          src="https://i.stack.imgur.com/lnYep.png"
+                          alt="poster"
+                          class="card-img-top"
+                        />
+                    )
+                }
+            </a>
+            <div class="card-body">
+              <h5 class="card-title"> {movie.title} </h5>
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</Layout>
