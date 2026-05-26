@@ -1,9 +1,0 @@
-import{r as i}from"./index.NEDEFKed.js";var u={exports:{}},a={};/**
- * @license React
- * react-jsx-runtime.production.min.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */var p=i,_=Symbol.for("react.element"),m=Symbol.for("react.fragment"),x=Object.prototype.hasOwnProperty,d=p.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner,f={key:!0,ref:!0,__self:!0,__source:!0};function h(t,e,n){var r,o={},c=null,l=null;n!==void 0&&(c=""+n),e.key!==void 0&&(c=""+e.key),e.ref!==void 0&&(l=e.ref);for(r in e)x.call(e,r)&&!f.hasOwnProperty(r)&&(o[r]=e[r]);if(t&&t.defaultProps)for(r in e=t.defaultProps,e)o[r]===void 0&&(o[r]=e[r]);return{$$typeof:_,type:t,key:c,ref:l,props:o,_owner:d.current}}a.Fragment=m;a.jsx=h;a.jsxs=h;u.exports=a;var s=u.exports;const j=()=>{const[t,e]=i.useState("");return s.jsxs("div",{className:"search-hero",children:[s.jsxs("h1",{className:"search-hero__title",children:["Encuentra tu próxima ",s.jsx("span",{children:"película favorita"})]}),s.jsx("p",{className:"search-hero__subtitle",children:"Busca entre miles de títulos y descubre sinopsis, calificaciones y trailers"}),s.jsx("form",{action:"/results/"+t,method:"POST",className:"search-hero__form",children:s.jsxs("div",{className:"search-hero__input-wrap",children:[s.jsxs("svg",{className:"search-hero__icon",xmlns:"http://www.w3.org/2000/svg",viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:"2.5",strokeLinecap:"round",strokeLinejoin:"round",children:[s.jsx("circle",{cx:"11",cy:"11",r:"8"}),s.jsx("line",{x1:"21",y1:"21",x2:"16.65",y2:"16.65"})]}),s.jsx("input",{type:"search",className:"search-hero__input",value:t,onChange:r=>e(r.target.value),placeholder:"Buscar película...",autoComplete:"off"}),s.jsx("button",{type:"submit",className:"search-hero__btn",children:"Buscar"})]})})]})};export{j as Search};

@@ -2,6 +2,9 @@
   "name": "movie-api",
   "type": "module",
   "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -10,17 +13,17 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.5.10",
-    "@astrojs/react": "^3.3.0",
+    "@astrojs/check": "^0.9.9",
+    "@astrojs/react": "^5.0.5",
     "@types/react": "^18.2.79",
     "@types/react-dom": "^18.2.25",
-    "astro": "^4.6.3",
+    "astro": "^6.3.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "typescript": "^5.4.5"
   },
   "devDependencies": {
-    "@astrojs/vercel": "^7.2.0",
+    "@astrojs/vercel": "^10.0.7",
     "@types/node": "^25.9.1"
   }
 }
