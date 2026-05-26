@@ -1,5 +1,36 @@
-<footer class="mt-5 bg-body-tertiary text-center text-lg-start" style="background-color: rgb(226, 226, 226);">
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
-      Realizado por Jose BM - 2024
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__inner">
+      <span class="site-footer__brand">🎬 CineSearch</span>
+      <span class="site-footer__copy">Realizado por Jose BM · {new Date().getFullYear()}</span>
     </div>
-  </footer>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: #111111;
+    border-top: 1px solid #2c2c2e;
+    margin-top: 4rem;
+  }
+
+  .site-footer__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 0;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .site-footer__brand {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #f5c518;
+  }
+
+  .site-footer__copy {
+    font-size: 0.8rem;
+    color: #8e8e93;
+  }
+</style>

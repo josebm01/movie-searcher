@@ -10,21 +10,226 @@ const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="description" content="Buscador de películas — CineSearch" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="stylesheet" href="../../css/bootstrap.min.css">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
 	<body>
 		<Nav />
-		<div class="container">
+		<div class="container py-4">
 			<slot />
 		</div>
 		<Footer />
 	</body>
 </html>
+
+<style is:global>
+	:root {
+		--bg-primary: #0d0d0d;
+		--bg-card: #1c1c1e;
+		--bg-card-hover: #252527;
+		--accent: #f5c518;
+		--text-primary: #f5f5f5;
+		--text-secondary: #8e8e93;
+		--border: #2c2c2e;
+	}
+
+	body {
+		background-color: var(--bg-primary);
+		color: var(--text-primary);
+		font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+		min-height: 100vh;
+	}
+
+	/* ── Movie cards ── */
+	.movie-card {
+		background-color: var(--bg-card);
+		border-radius: 12px;
+		overflow: hidden;
+		border: 1px solid var(--border);
+		transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.movie-card:hover {
+		transform: translateY(-6px);
+		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+		background-color: var(--bg-card-hover);
+		color: inherit;
+	}
+
+	.movie-card__poster {
+		position: relative;
+		overflow: hidden;
+		aspect-ratio: 2 / 3;
+		background-color: #111;
+	}
+
+	.movie-card__poster img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.3s ease;
+		display: block;
+	}
+
+	.movie-card:hover .movie-card__poster img {
+		transform: scale(1.05);
+	}
+
+	.movie-card__overlay {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(to bottom, transparent 55%, rgba(0,0,0,0.85) 100%);
+		display: flex;
+		align-items: flex-end;
+		padding: 10px;
+		opacity: 0;
+		transition: opacity 0.25s ease;
+	}
+
+	.movie-card:hover .movie-card__overlay {
+		opacity: 1;
+	}
+
+	.movie-card__rating {
+		background-color: var(--accent);
+		color: #000;
+		font-weight: 700;
+		font-size: 0.72rem;
+		padding: 3px 8px;
+		border-radius: 6px;
+		letter-spacing: 0.3px;
+	}
+
+	.movie-card__info {
+		padding: 10px 12px 12px;
+		flex: 1;
+	}
+
+	.movie-card__title {
+		font-size: 0.85rem;
+		font-weight: 600;
+		color: var(--text-primary);
+		margin: 0 0 3px;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		line-height: 1.35;
+	}
+
+	.movie-card__year {
+		font-size: 0.75rem;
+		color: var(--text-secondary);
+		margin: 0;
+	}
+
+	/* ── Section headings ── */
+	.section-title {
+		font-size: 1.3rem;
+		font-weight: 700;
+		margin-bottom: 1.25rem;
+		padding-bottom: 0.5rem;
+		border-bottom: 2px solid var(--accent);
+		display: inline-block;
+		color: var(--text-primary);
+	}
+
+	/* ── Search hero ── */
+	.search-hero {
+		text-align: center;
+		padding: 3rem 0 2.5rem;
+	}
+
+	.search-hero__title {
+		font-size: clamp(1.6rem, 4vw, 2.4rem);
+		font-weight: 700;
+		color: var(--text-primary);
+		margin-bottom: 0.5rem;
+		letter-spacing: -0.5px;
+	}
+
+	.search-hero__title span {
+		color: var(--accent);
+	}
+
+	.search-hero__subtitle {
+		color: var(--text-secondary);
+		font-size: 0.95rem;
+		margin-bottom: 1.75rem;
+	}
+
+	.search-hero__form {
+		max-width: 600px;
+		margin: 0 auto;
+	}
+
+	.search-hero__input-wrap {
+		display: flex;
+		align-items: center;
+		background-color: var(--bg-card);
+		border: 1px solid var(--border);
+		border-radius: 50px;
+		padding: 6px 6px 6px 18px;
+		transition: border-color 0.2s, box-shadow 0.2s;
+	}
+
+	.search-hero__input-wrap:focus-within {
+		border-color: var(--accent);
+		box-shadow: 0 0 0 3px rgba(245, 197, 24, 0.15);
+	}
+
+	.search-hero__icon {
+		width: 18px;
+		height: 18px;
+		color: var(--text-secondary);
+		flex-shrink: 0;
+		margin-right: 10px;
+	}
+
+	.search-hero__input {
+		flex: 1;
+		background: transparent;
+		border: none;
+		outline: none;
+		color: var(--text-primary);
+		font-size: 0.95rem;
+		font-family: inherit;
+	}
+
+	.search-hero__input::placeholder {
+		color: var(--text-secondary);
+	}
+
+	.search-hero__btn {
+		background-color: var(--accent);
+		color: #000;
+		border: none;
+		border-radius: 50px;
+		padding: 8px 22px;
+		font-size: 0.88rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: background-color 0.2s, transform 0.15s;
+		font-family: inherit;
+	}
+
+	.search-hero__btn:hover {
+		background-color: #e0b310;
+		transform: scale(1.03);
+	}
+</style>
