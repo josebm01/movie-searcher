@@ -1,0 +1,94 @@
+---
+import Layout from "@layouts/Layout.astro";
+import { getDataMovieDetail } from "src/api/movie";
+import { Search as SearchBar } from "@components/Search.jsx";
+
+const { search } = Astro.params;
+const data = await getDataMovieDetail(search || "");
+
+const detail = "/detail/";
+const poster_url = "https://image.tmdb.org/t/p/w500";
+---
+
+<Layout title={`Resultados: ${search}`}>
+  <SearchBar client:load />
+
+  <div class="results-header">
+    <h2 class="section-title">
+      Resultados para &ldquo;<span class="results-query">{search}</span>&rdquo;
+    </h2>
+    <span class="results-count">{data.results.length} películas encontradas</span>
+  </div>
+
+  {data.results.length === 0 ? (
+    <div class="no-results">
+      <p class="no-results__icon">🎬</p>
+      <p class="no-results__text">No encontramos películas para <strong>{search}</strong>. Intenta con otro término.</p>
+    </div>
+  ) : (
+    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-xl-5 g-3">
+      {data.results.map((movie: any) => (
+        <div class="col">
+          <a href={detail + movie.id} class="movie-card">
+            <div class="movie-card__poster">
+              {movie.poster_path ? (
+                <img src={poster_url + movie.poster_path} alt={movie.title} loading="lazy" />
+              ) : (
+                <img src="https://i.stack.imgur.com/lnYep.png" alt={movie.title} loading="lazy" />
+              )}
+              {movie.vote_average > 0 && (
+                <div class="movie-card__overlay">
+                  <span class="movie-card__rating">⭐ {movie.vote_average.toFixed(1)}</span>
+                </div>
+              )}
+            </div>
+            <div class="movie-card__info">
+              <p class="movie-card__title">{movie.title}</p>
+              <p class="movie-card__year">{movie.release_date?.split('-')[0]}</p>
+            </div>
+          </a>
+        </div>
+      ))}
+    </div>
+  )}
+</Layout>
+
+<style>
+  .results-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.25rem;
+  }
+
+  .results-query {
+    color: #f5c518;
+  }
+
+  .results-count {
+    font-size: 0.82rem;
+    color: #8e8e93;
+    margin-bottom: 1.25rem;
+    display: block;
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 4rem 1rem;
+    color: #8e8e93;
+  }
+
+  .no-results__icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .no-results__text {
+    font-size: 1rem;
+  }
+
+  .no-results__text strong {
+    color: #f5f5f5;
+  }
+</style>

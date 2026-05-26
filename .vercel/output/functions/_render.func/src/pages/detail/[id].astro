@@ -1,0 +1,225 @@
+---
+import Layout from "@layouts/Layout.astro";
+import { getDataMovie } from "src/api/movie";
+
+const { id } = Astro.params;
+
+const data = await getDataMovie("https://api.themoviedb.org/3/movie/" + id);
+const poster_url = "https://image.tmdb.org/t/p/w500";
+
+const trailer = await getDataMovie("https://api.themoviedb.org/3/movie/" + id + "/videos");
+const video = trailer.results.find((p: any) => p.type === "Trailer");
+const youtube = "https://www.youtube.com/embed/";
+
+const rating = data.vote_average ? data.vote_average.toFixed(1) : null;
+const year = data.release_date?.split('-')[0];
+const runtime = data.runtime ? `${Math.floor(data.runtime / 60)}h ${data.runtime % 60}m` : null;
+---
+
+<Layout title={data.title ?? "Película"}>
+  <div class="detail-back">
+    <a href="javascript:history.back()" class="detail-back__link">← Volver</a>
+  </div>
+
+  <div class="detail-hero">
+    <div class="detail-poster">
+      <img
+        src={poster_url + data.poster_path}
+        alt={data.title}
+        class="detail-poster__img"
+      />
+    </div>
+
+    <div class="detail-info">
+      <h1 class="detail-info__title">{data.title}</h1>
+
+      {data.tagline && (
+        <p class="detail-info__tagline">"{data.tagline}"</p>
+      )}
+
+      <div class="detail-info__meta">
+        {rating && (
+          <span class="detail-badge detail-badge--gold">⭐ {rating} / 10</span>
+        )}
+        {year && (
+          <span class="detail-badge detail-badge--muted">{year}</span>
+        )}
+        {runtime && (
+          <span class="detail-badge detail-badge--muted">🕐 {runtime}</span>
+        )}
+      </div>
+
+      {data.genres && data.genres.length > 0 && (
+        <div class="detail-genres">
+          {data.genres.map((g: any) => (
+            <span class="detail-genre">{g.name}</span>
+          ))}
+        </div>
+      )}
+
+      <div class="detail-info__section">
+        <h3 class="detail-info__section-title">Sinopsis</h3>
+        <p class="detail-info__overview">{data.overview || "Sin descripción disponible."}</p>
+      </div>
+
+      <p class="detail-info__release">
+        Lanzamiento: <strong>{data.release_date}</strong>
+      </p>
+    </div>
+  </div>
+
+  <div class="detail-trailer">
+    <h2 class="section-title">Trailer</h2>
+    {video ? (
+      <div class="ratio ratio-16x9 detail-trailer__frame">
+        <iframe
+          src={youtube + video.key}
+          title={`Trailer de ${data.title}`}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        />
+      </div>
+    ) : (
+      <p class="detail-trailer__missing">No se encontró trailer disponible.</p>
+    )}
+  </div>
+</Layout>
+
+<style>
+  .detail-back {
+    margin-bottom: 1.5rem;
+  }
+
+  .detail-back__link {
+    color: #8e8e93;
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.2s;
+  }
+
+  .detail-back__link:hover {
+    color: #f5f5f5;
+  }
+
+  .detail-hero {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  @media (max-width: 680px) {
+    .detail-hero {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .detail-poster__img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+    display: block;
+  }
+
+  .detail-info__title {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.4rem;
+    color: #f5f5f5;
+  }
+
+  .detail-info__tagline {
+    color: #8e8e93;
+    font-style: italic;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+
+  .detail-info__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .detail-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  .detail-badge--gold {
+    background-color: #f5c518;
+    color: #000;
+  }
+
+  .detail-badge--muted {
+    background-color: #2c2c2e;
+    color: #d1d1d6;
+  }
+
+  .detail-genres {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .detail-genre {
+    border: 1px solid #3a3a3c;
+    color: #aeaeb2;
+    font-size: 0.78rem;
+    padding: 3px 10px;
+    border-radius: 50px;
+  }
+
+  .detail-info__section {
+    margin-bottom: 1.25rem;
+  }
+
+  .detail-info__section-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #8e8e93;
+    margin-bottom: 0.5rem;
+  }
+
+  .detail-info__overview {
+    color: #d1d1d6;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .detail-info__release {
+    font-size: 0.82rem;
+    color: #8e8e93;
+    margin: 0;
+  }
+
+  .detail-info__release strong {
+    color: #aeaeb2;
+  }
+
+  .detail-trailer {
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+  }
+
+  .detail-trailer__frame {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  .detail-trailer__missing {
+    color: #8e8e93;
+    font-size: 0.95rem;
+  }
+</style>
