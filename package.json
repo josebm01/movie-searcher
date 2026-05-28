@@ -17,13 +17,13 @@
     "@astrojs/react": "^5.0.5",
     "@types/react": "^18.2.79",
     "@types/react-dom": "^18.2.25",
+    "@astrojs/vercel": "^10.0.7",
     "astro": "^6.3.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "typescript": "^5.4.5"
   },
   "devDependencies": {
-    "@astrojs/vercel": "^10.0.7",
     "@types/node": "^25.9.1"
   }
 }

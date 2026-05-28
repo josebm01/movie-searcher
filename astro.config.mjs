@@ -5,9 +5,7 @@ import vercel from "@astrojs/vercel";
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
-  adapter: vercel({
-    runtime: 'nodejs22.x'
-  }),
+  adapter: vercel(),
   devToolbar: {
     enabled: false
   },
