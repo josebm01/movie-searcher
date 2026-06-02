@@ -15,15 +15,15 @@ const poster_url = "https://image.tmdb.org/t/p/w500";
 
   <div class="results-header">
     <h2 class="section-title">
-      Resultados para &ldquo;<span class="results-query">{search}</span>&rdquo;
+      Results for &ldquo;<span class="results-query">{search}</span>&rdquo;
     </h2>
-    <span class="results-count">{data.results.length} películas encontradas</span>
+    <span class="results-count">{data.results.length} movies found</span>
   </div>
 
   {data.results.length === 0 ? (
     <div class="no-results">
       <p class="no-results__icon">🎬</p>
-      <p class="no-results__text">No encontramos películas para <strong>{search}</strong>. Intenta con otro término.</p>
+      <p class="no-results__text">No movies found for <strong>{search}</strong>. Try a different term.</p>
     </div>
   ) : (
     <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-xl-5 g-3">

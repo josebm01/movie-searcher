@@ -18,7 +18,7 @@ const runtime = data.runtime ? `${Math.floor(data.runtime / 60)}h ${data.runtime
 
 <Layout title={data.title ?? "Película"}>
   <div class="detail-back">
-    <a href="javascript:history.back()" class="detail-back__link">← Volver</a>
+    <a href="javascript:history.back()" class="detail-back__link">← Back</a>
   </div>
 
   <div class="detail-hero">
@@ -58,12 +58,12 @@ const runtime = data.runtime ? `${Math.floor(data.runtime / 60)}h ${data.runtime
       )}
 
       <div class="detail-info__section">
-        <h3 class="detail-info__section-title">Sinopsis</h3>
-        <p class="detail-info__overview">{data.overview || "Sin descripción disponible."}</p>
+        <h3 class="detail-info__section-title">Synopsis</h3>
+        <p class="detail-info__overview">{data.overview || "No description available."}</p>
       </div>
 
       <p class="detail-info__release">
-        Lanzamiento: <strong>{data.release_date}</strong>
+        Release date: <strong>{data.release_date}</strong>
       </p>
     </div>
   </div>
@@ -80,7 +80,7 @@ const runtime = data.runtime ? `${Math.floor(data.runtime / 60)}h ${data.runtime
         />
       </div>
     ) : (
-      <p class="detail-trailer__missing">No se encontró trailer disponible.</p>
+      <p class="detail-trailer__missing">No trailer available.</p>
     )}
   </div>
 </Layout>

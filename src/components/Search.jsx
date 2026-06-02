@@ -7,10 +7,10 @@ export const Search = () => {
   return (
     <div className="search-hero">
       <h1 className="search-hero__title">
-        Encuentra tu próxima <span>película favorita</span>
+        Find your next <span>favorite movie</span>
       </h1>
       <p className="search-hero__subtitle">
-        Busca entre miles de títulos y descubre sinopsis, calificaciones y trailers
+        Search thousands of titles and discover synopses, ratings, and trailers
       </p>
       <form action={url + value} method="POST" className="search-hero__form">
         <div className="search-hero__input-wrap">
@@ -23,10 +23,10 @@ export const Search = () => {
             className="search-hero__input"
             value={value}
             onChange={e => setValue(e.target.value)}
-            placeholder="Buscar película..."
+            placeholder="Search movie..."
             autoComplete="off"
           />
-          <button type="submit" className="search-hero__btn">Buscar</button>
+          <button type="submit" className="search-hero__btn">Search</button>
         </div>
       </form>
     </div>
